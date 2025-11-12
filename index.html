@@ -1,27 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>API Test</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="A clean and responsive weather forecast application built using vanilla JavaScript, HTML, and Tailwind CSS. It fetches real-time weather data from a public API and displays current conditions, a 5-day forecast, and location-based updates.">
+  <meta name="author" content="Sufal Thakre">
+  <title>Weather Forecast Application</title>
+  <link rel="stylesheet" href="src/output.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-900 text-white p-8">
 
-  <h1 class="text-2xl mb-4">Open-Meteo API Test</h1>
+<body class="bg-gray-900 text-white p-8 ">
 
-  <form id="form" class="mb-6">
-    <input type="text" id="city" placeholder="Enter city (e.g. Mumbai)" 
-           class="p-2 text-black rounded mr-2" required />
-    <button type="submit" class="px-4 py-2 bg-blue-600 rounded">Search</button>
-  </form>
+  <div id="bgElements"></div>
+  <main class=" border relative z-10 flex flex-col min-h-screen">
+    <!-- header Section -->
+    <header class="text-center flex justify-between py-2 px-4">
+      <h1 class="text-lg md:text-xl font-light bg-clip-text text-slate-300 mb-2 ">Check the Weather
+        <span>☁️🌧️🌩️</span>
+      </h1>
+      <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+        <p class="text-xs md:text-lg">11 NOV | 9.00</p><button
+          class=" py-1 px-3 md:px-4 hidden md:flex justify-between items-center gap-2 md:gap-4 border rounded-full">
+          <div class="w-5 md:w-9 md:h-9 overflow-hidden rounded-full">
+            <img src="assets/admin-pic.jpg" alt="admin-pic" class="w-full h-full object-cover" />
+          </div>
+          <span>Admin</span>
+        </button>
+      </div>
+    </header>
+    <!-- Search & Controls -->
+    <section class="px-2 md:px-4 flex flex-col items-center">
+      <div class="rounded-2xl p-3 w-full max-w-md">
+        <form id="searchForm" class="flex gap-1 md:gap-3 mb-2">
+          <input type="text" id="cityInput" placeholder="Search city..."
+            class="flex-1 px-2 md:px-4 py-2 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-1 focus:ring-white/30" />
+          <button type="submit"
+            class="px-3 md:px-6 py-2 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        <button id="locationBtn"
+          class="w-full py-3 bg-slate-900 hover:bg-slate-300 rounded-xl transition-all duration-300 ">
+          <i class="fas fa-location-arrow mr-2"></i>
+          Use My Location
+        </button>
+      </div>
 
-  <button id="locationBtn" class="mb-6 px-4 py-2 bg-green-600 rounded">
-    Use My Location
-  </button>
+      <!-- Recent Cities Dropdown -->
+      <select id="recentCities" class=" rounded-xl px-2 md:px-4 py-2 w-full max-w-md mt-4 hidden">
+        <option value="">Recent Searches</option>
+        <!-- dynamic options will be added here -->
+      </select>
+    </section>
+    <!-- display Current Weather -->
+    <section class="flex md:flex-row ">
 
-  <div id="result" class="mt-6 p-4 bg-gray-800 rounded"></div>
+      <!-- left section -->
+      <div id="left" class="flex flex-col w-full">
+        <h1 class="text-3xl">Cloudy
+          <h2 class="text-xl">Partially cloud sky</h2>
+        </h1>
+        <p class="flex-wrap">a period when cloudy weather is common,
+           and it can occur during a specific time of year, such as the rainy or
+          winter season</p>
+        
+        <h1 id="current-temperature" class="text-8xl text-red-900">27°<span>C</span></h1>
+        <h1><i class="fa-solid fa-location-dot"></i>Lalburra</h1>
+      </div>
+
+      <!-- right section  -->
+      <div id="right" class="flex flex-col w-full">
+        <div class="cards w-[50%]">
+          <div class="flex justify-between "><span><i class="fa-solid fa-wind"></i> Wind status</span><span>7.89km</span></div>
+          <div id="wind-graph"></div>
+        </div>
+        <div class="cards w-[50%]">
+          <div class="flex justify-between "><span class="flex"><img src="assets/humidity.png" class="w-5" alt="humidity">humidity status</span><span>30%</span></div>
+          <div id="humidity-graph"></div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+  </main>
+  <div id="error"></div>
+
 
   <script src="scripts/main.js"></script>
 </body>
+
 </html>
