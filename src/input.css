@@ -1,1 +1,145 @@
 @import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 3D Clouds Background */
+#bgElements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  transition: all 1s ease;
+}
+
+.cloud-3d {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out;
+}
+
+.cloud-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(135, 206, 250, 0.6), transparent);
+  top: 10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.cloud-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(176, 224, 230, 0.5), transparent);
+  top: 40%;
+  right: -15%;
+  animation-delay: 5s;
+}
+
+.cloud-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(230, 230, 250, 0.4), transparent);
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 10s;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(50px, -30px) scale(1.1);
+  }
+
+  50% {
+    transform: translate(-30px, 40px) scale(0.9);
+  }
+
+  75% {
+    transform: translate(40px, 20px) scale(1.05);
+  }
+}
+
+/* main scetion background */
+
+main {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
+/* Cards Styling */
+.weather-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.weather-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Forecast Card Wavy Style */
+.forecast-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.forecast-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+
+/* Graph Styles */
+.graph-container {
+  height: 60px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.graph-line {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2;
+  fill: none;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+/* Weather condition backgrounds */
+body.cloudy {
+  background: linear-gradient(135deg, #4B79A1 0%, #283E51 100%);
+}
