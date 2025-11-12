@@ -16,7 +16,7 @@
 <body class="text-white p-4 md:p-8 cloudy">
 
   <!-- 3D Fluid Clouds Background with Motion -->
-  <div id="bgElements">
+  <div id="bgElements fixed top-0 left-0 w-full h-full z-0 overflow-hidden">
     <div class="cloud cloud-1"></div>
     <div class="cloud cloud-2"></div>
     <div class="cloud cloud-3"></div>
@@ -35,7 +35,7 @@
     <div class="rain-drop drop-9"></div>
   </div>
 
-  <main class="relative z-10 flex flex-col min-h-screen rounded-2xl lg:rounded-3xl max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+  <main class="relative z-10 flex flex-col min-h-screen rounded-2xl lg:rounded-3xl max-w-7xl mx-auto p-4 md:p-6 lg:p-8 bg-[rgba(255,255,255,0.08)] backdrop-blur-[5px] border border-[rgba(255,255,255,0.15)] [box-shadow:0_8px_40px_0_rgba(0,0,0,0.3)]">
     
     <!-- Header Section -->
     <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-3 px-2 md:px-4 mb-6">
@@ -89,7 +89,7 @@
           A period when cloudy weather is common, and it can occur during a specific time of year, such as the rainy or winter season
         </p>
         
-        <div class="temp-display mt-4 md:mt-6" id="current-temperature">
+        <div class="temp-display mt-4 md:mt-6 text-[7rem] font-extralight leading-none [text-shadow:0_0_50px_rgba(255,255,255,0.4)] tracking-[-0.05em]" id="current-temperature">
           27°<span class="text-4xl md:text-5xl">C</span>
         </div>
         <h2 class="text-lg md:text-xl flex items-center gap-2 mt-2" id="locationDisplay">
@@ -98,8 +98,8 @@
       </div>
 
       <!-- Right Section - Weather Stats -->
-      <div id="right" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="weather-card">
+      <div id="right" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="weather-card bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] rounded-[20px] p-5 transition-all duration-300 ease-in-out min-h-[140px] hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-1 hover:[box-shadow:0_12px_28px_rgba(0,0,0,0.25)]">
           <div class="flex justify-between items-center mb-3">
             <span class="flex items-center gap-2 text-sm md:text-base">
               <i class="fa-solid fa-wind"></i> Wind Status
@@ -113,7 +113,7 @@
           </div>
         </div>
 
-        <div class="weather-card">
+        <div class="weather-card bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] rounded-[20px] p-5 transition-all duration-300 ease-in-out min-h-[140px] hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-1 hover:[box-shadow:0_12px_28px_rgba(0,0,0,0.25)]">
           <div class="flex justify-between items-center mb-3">
             <span class="flex items-center gap-2 text-sm md:text-base">
               <i class="fa-solid fa-droplet"></i> Humidity
@@ -134,35 +134,35 @@
       <h2 class="text-xl md:text-2xl font-light mb-4 md:mb-6">5-Day Forecast</h2>
       <div id="forecast" class="grid grid-cols-2 gap-3 md:gap-4 sm:grid-cols-3 lg:grid-cols-5">
         
-        <div class="forecast-card">
+        <div class="forecast-card bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.2)] rounded-[18px] p-[18px] text-center transition-all duration-300 ease-in-out relative min-h-[180px] flex flex-col justify-between hover:bg-[rgba(255,255,255,0.18)] hover:-translate-y-1.5 hover:scale-[1.03] hover:[box-shadow:0_15px_35px_rgba(0,0,0,0.3)] hover:z-10">
           <h3 class="text-xs md:text-sm text-white/60 mb-1">Monday</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">11/11/2025</h2>
           <i class="fas fa-cloud text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
           <h1 class="text-2xl md:text-3xl font-light mt-auto">26°</h1>
         </div>
 
-        <div class="forecast-card">
+        <div class="forecast-card bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.2)] rounded-[18px] p-[18px] text-center transition-all duration-300 ease-in-out relative min-h-[180px] flex flex-col justify-between hover:bg-[rgba(255,255,255,0.18)] hover:-translate-y-1.5 hover:scale-[1.03] hover:[box-shadow:0_15px_35px_rgba(0,0,0,0.3)] hover:z-10">
           <h3 class="text-xs md:text-sm text-white/60 mb-1">Tuesday</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">12/11/2025</h2>
           <i class="fas fa-cloud-sun text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
           <h1 class="text-2xl md:text-3xl font-light mt-auto">28°</h1>
         </div>
 
-        <div class="forecast-card">
+        <div class="forecast-card bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.2)] rounded-[18px] p-[18px] text-center transition-all duration-300 ease-in-out relative min-h-[180px] flex flex-col justify-between hover:bg-[rgba(255,255,255,0.18)] hover:-translate-y-1.5 hover:scale-[1.03] hover:[box-shadow:0_15px_35px_rgba(0,0,0,0.3)] hover:z-10">
           <h3 class="text-xs md:text-sm text-white/60 mb-1">Wednesday</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">13/11/2025</h2>
           <i class="fas fa-cloud-rain text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
           <h1 class="text-2xl md:text-3xl font-light mt-auto">24°</h1>
         </div>
 
-        <div class="forecast-card">
+        <div class="forecast-card bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.2)] rounded-[18px] p-[18px] text-center transition-all duration-300 ease-in-out relative min-h-[180px] flex flex-col justify-between hover:bg-[rgba(255,255,255,0.18)] hover:-translate-y-1.5 hover:scale-[1.03] hover:[box-shadow:0_15px_35px_rgba(0,0,0,0.3)] hover:z-10">
           <h3 class="text-xs md:text-sm text-white/60 mb-1">Thursday</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">14/11/2025</h2>
           <i class="fas fa-cloud text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
           <h1 class="text-2xl md:text-3xl font-light mt-auto">26°</h1>
         </div>
 
-        <div class="forecast-card">
+        <div class="forecast-card bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.2)] rounded-[18px] p-[18px] text-center transition-all duration-300 ease-in-out relative min-h-[180px] flex flex-col justify-between hover:bg-[rgba(255,255,255,0.18)] hover:-translate-y-1.5 hover:scale-[1.03] hover:[box-shadow:0_15px_35px_rgba(0,0,0,0.3)] hover:z-10">
           <h3 class="text-xs md:text-sm text-white/60 mb-1">Friday</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">15/11/2025</h2>
           <i class="fas fa-sun text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
