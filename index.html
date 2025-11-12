@@ -15,69 +15,84 @@
 
 <body class="text-white p-4 md:p-8 cloudy">
 
-  <!-- 3D Fluid Clouds Background -->
+  <!-- 3D Fluid Clouds Background with Motion -->
   <div id="bgElements">
-    <div class="cloud-3d cloud-1"></div>
-    <div class="cloud-3d cloud-2"></div>
-    <div class="cloud-3d cloud-3"></div>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+    <div class="cloud cloud-5"></div>
+    
+    <!-- Rain drops (hidden by default, shown when rainy) -->
+    <div class="rain-drop drop-1"></div>
+    <div class="rain-drop drop-2"></div>
+    <div class="rain-drop drop-3"></div>
+    <div class="rain-drop drop-4"></div>
+    <div class="rain-drop drop-5"></div>
+    <div class="rain-drop drop-6"></div>
+    <div class="rain-drop drop-7"></div>
+    <div class="rain-drop drop-8"></div>
+    <div class="rain-drop drop-9"></div>
   </div>
 
-  <main class="relative z-10 flex flex-col min-h-screen rounded-3xl max-w-7xl mx-auto p-6 bg-[rgba(255,255,255,0.05)] backdrop-blur-[20px] border border-[rgba(255,255,255,0.1)] [box-shadow:0_8px_32px_0_rgba(0,0,0,0.37)]">
+  <main class="relative z-10 flex flex-col min-h-screen rounded-2xl lg:rounded-3xl max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+    
     <!-- Header Section -->
-    <header class="flex justify-between items-center py-4 px-4 mb-6">
-      <h1 class="text-xl md:text-2xl font-light text-white">
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-3 px-2 md:px-4 mb-6">
+      <h1 class="text-lg md:text-xl lg:text-2xl font-light text-white">
         Check the Weather <span class="ml-2">☁️🌧️🌩️</span>
       </h1>
-      <div class="flex flex-col md:flex-row gap-4 items-center">
-        <p class="text-sm md:text-base" id="currentDateTime">11 NOV | 9:00</p>
-        <button class="py-2 px-4 hidden md:flex items-center gap-3 border border-white/30 rounded-full hover:bg-white/10 transition-all">
-          <div class="w-9 h-9 overflow-hidden rounded-full">
+      <div class="flex flex-row items-center gap-3 md:gap-4 w-full sm:w-auto justify-between sm:justify-end">
+        <p class="text-xs md:text-sm lg:text-base" id="currentDateTime">11 NOV | 9:00</p>
+        <button class="py-2 px-3 md:px-4 flex items-center gap-2 md:gap-3 border border-white/30 rounded-full hover:bg-white/10 transition-all">
+          <div class="w-7 h-7 md:w-9 md:h-9 overflow-hidden rounded-full">
             <img src="assets/admin-pic.jpg" alt="admin-pic" class="w-full h-full object-cover" />
           </div>
-          <span>Admin</span>
+          <span class="text-sm md:text-base">Admin</span>
         </button>
       </div>
     </header>
 
     <!-- Search & Controls -->
-    <section class="px-2 md:px-4 flex flex-col items-center mb-8">
-      <div class="w-full max-w-md">
-        <form id="searchForm" class="flex gap-3 mb-3">
+    <section class="px-2 md:px-4 flex flex-col items-center mb-6 lg:mb-8">
+      <div class="w-full max-w-lg">
+        <form id="searchForm" class="flex gap-2 md:gap-3 mb-3">
           <input type="text" id="cityInput" placeholder="Search city..."
-            class="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm border border-white/20 focus:placeholder-[rgba(255,255,255,0.5)]" />
+            class="flex-1 px-3 md:px-4 py-2.5 md:py-3 bg-white/10 rounded-xl text-sm md:text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm border border-white/20" />
           <button type="submit"
-            class="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300 border border-white/30">
-            <i class="fas fa-search"></i>
+            class="px-4 md:px-6 py-2.5 md:py-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300 border border-white/30">
+            <i class="fas fa-search text-sm md:text-base"></i>
           </button>
         </form>
         <button id="locationBtn"
-          class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20">
+          class="w-full py-2.5 md:py-3 text-sm md:text-base bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20">
           <i class="fas fa-location-arrow mr-2"></i>
           Use My Location
         </button>
       </div>
 
-      <select id="recentCities" class="rounded-xl px-4 py-2 w-full max-w-md mt-4 bg-white/10 backdrop-blur-sm border border-white/20 hidden">
+      <select id="recentCities" class="rounded-xl px-4 py-2 w-full max-w-lg mt-4 bg-white/10 backdrop-blur-sm border border-white/20 text-sm md:text-base hidden">
         <option value="">Recent Searches</option>
       </select>
     </section>
 
     <!-- Current Weather Display -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 px-4">
-      <!-- Left Section -->
-      <div id="left" class="flex flex-col space-y-4">
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8 px-2 md:px-4">
+      
+      <!-- Left Section - Main Weather Info -->
+      <div id="left" class="flex flex-col space-y-3 md:space-y-4">
         <div>
-          <h1 class="text-4xl md:text-5xl font-light mb-2" id="weatherCondition">Cloudy</h1>
-          <h2 class="text-lg md:text-xl text-white/70" id="weatherDescription">Partially cloud sky</h2>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-light mb-2" id="weatherCondition">Cloudy</h1>
+          <h2 class="text-base md:text-lg lg:text-xl text-white/70" id="weatherDescription">Partially cloud sky</h2>
         </div>
-        <p class="text-sm md:text-base text-white/60 leading-relaxed max-w-lg" id="weatherExplanation">
+        <p class="text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-lg" id="weatherExplanation">
           A period when cloudy weather is common, and it can occur during a specific time of year, such as the rainy or winter season
         </p>
         
-        <h1 class="temp-display text-[6rem] font-extralight leading-none [text-shadow:0_0_40px_rgba(255,255,255,0.3)] mt-6" id="current-temperature">
-          27°<span class="text-5xl">C</span>
-        </h1>
-        <h2 class="text-xl flex items-center gap-2" id="locationDisplay">
+        <div class="temp-display mt-4 md:mt-6" id="current-temperature">
+          27°<span class="text-4xl md:text-5xl">C</span>
+        </div>
+        <h2 class="text-lg md:text-xl flex items-center gap-2 mt-2" id="locationDisplay">
           <i class="fa-solid fa-location-dot"></i>Lalburra
         </h2>
       </div>
@@ -85,28 +100,28 @@
       <!-- Right Section - Weather Stats -->
       <div id="right" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="weather-card">
-          <div class="flex justify-between items-center mb-2">
-            <span class="flex items-center gap-2">
+          <div class="flex justify-between items-center mb-3">
+            <span class="flex items-center gap-2 text-sm md:text-base">
               <i class="fa-solid fa-wind"></i> Wind Status
             </span>
-            <span class="font-semibold" id="windSpeed">7.89 km/h</span>
+            <span class="font-semibold text-sm md:text-base" id="windSpeed">7.89 km/h</span>
           </div>
-          <div class="h-[60px] mt-2.5 relative">
-            <svg width="100%" height="60" id="wind-graph">
+          <div class="h-14 md:h-16 mt-2">
+            <svg width="100%" height="100%" id="wind-graph" viewBox="0 0 240 60" preserveAspectRatio="none">
               <path class="graph-line" d="M 0 40 Q 30 20, 60 35 T 120 40 T 180 30 T 240 35" />
             </svg>
           </div>
         </div>
 
         <div class="weather-card">
-          <div class="flex justify-between items-center mb-2">
-            <span class="flex items-center gap-2">
+          <div class="flex justify-between items-center mb-3">
+            <span class="flex items-center gap-2 text-sm md:text-base">
               <i class="fa-solid fa-droplet"></i> Humidity
             </span>
-            <span class="font-semibold" id="humidityLevel">30%</span>
+            <span class="font-semibold text-sm md:text-base" id="humidityLevel">30%</span>
           </div>
-          <div class="h-[60px] mt-2.5 relative">
-            <svg width="100%" height="60" id="humidity-graph">
+          <div class="h-14 md:h-16 mt-2">
+            <svg width="100%" height="100%" id="humidity-graph" viewBox="0 0 240 60" preserveAspectRatio="none">
               <path class="graph-line" d="M 0 30 Q 30 45, 60 25 T 120 35 T 180 40 T 240 30" />
             </svg>
           </div>
@@ -115,46 +130,52 @@
     </section>
 
     <!-- 5 Day Forecast Section -->
-    <section class="px-4">
-      <h2 class="text-2xl font-light mb-6">5-Day Forecast</h2>
-      <div id="forecast" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-        <!-- forecast card  -->
+    <section class="px-2 md:px-4">
+      <h2 class="text-xl md:text-2xl font-light mb-4 md:mb-6">5-Day Forecast</h2>
+      <div id="forecast" class="grid grid-cols-2 gap-3 md:gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        
         <div class="forecast-card">
-          <h3 class="text-sm text-white/60 mb-2">Monday</h3>
-          <h2 class="text-xs mb-3">11/11/2025</h2>
-          <i class="fas fa-cloud text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
-          <h1 class="text-3xl font-light">26°</h1>
+          <h3 class="text-xs md:text-sm text-white/60 mb-1">Monday</h3>
+          <h2 class="text-xs mb-2 md:mb-3 text-white/50">11/11/2025</h2>
+          <i class="fas fa-cloud text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
+          <h1 class="text-2xl md:text-3xl font-light mt-auto">26°</h1>
         </div>
+
         <div class="forecast-card">
-          <h3 class="text-sm text-white/60 mb-2">Tuesday</h3>
-          <h2 class="text-xs mb-3">12/11/2025</h2>
-          <i class="fas fa-cloud-sun text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
-          <h1 class="text-3xl font-light">28°</h1>
+          <h3 class="text-xs md:text-sm text-white/60 mb-1">Tuesday</h3>
+          <h2 class="text-xs mb-2 md:mb-3 text-white/50">12/11/2025</h2>
+          <i class="fas fa-cloud-sun text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
+          <h1 class="text-2xl md:text-3xl font-light mt-auto">28°</h1>
         </div>
+
         <div class="forecast-card">
-          <h3 class="text-sm text-white/60 mb-2">Wednesday</h3>
-          <h2 class="text-xs mb-3">13/11/2025</h2>
-          <i class="fas fa-cloud-rain text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
-          <h1 class="text-3xl font-light">24°</h1>
+          <h3 class="text-xs md:text-sm text-white/60 mb-1">Wednesday</h3>
+          <h2 class="text-xs mb-2 md:mb-3 text-white/50">13/11/2025</h2>
+          <i class="fas fa-cloud-rain text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
+          <h1 class="text-2xl md:text-3xl font-light mt-auto">24°</h1>
         </div>
+
         <div class="forecast-card">
-          <h3 class="text-sm text-white/60 mb-2">Thursday</h3>
-          <h2 class="text-xs mb-3">14/11/2025</h2>
-          <i class="fas fa-cloud text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
-          <h1 class="text-3xl font-light">26°</h1>
+          <h3 class="text-xs md:text-sm text-white/60 mb-1">Thursday</h3>
+          <h2 class="text-xs mb-2 md:mb-3 text-white/50">14/11/2025</h2>
+          <i class="fas fa-cloud text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
+          <h1 class="text-2xl md:text-3xl font-light mt-auto">26°</h1>
         </div>
+
         <div class="forecast-card">
-          <h3 class="text-sm text-white/60 mb-2">Friday</h3>
-          <h2 class="text-xs mb-3">15/11/2025</h2>
-          <i class="fas fa-sun text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
-          <h1 class="text-3xl font-light">23°</h1>
+          <h3 class="text-xs md:text-sm text-white/60 mb-1">Friday</h3>
+          <h2 class="text-xs mb-2 md:mb-3 text-white/50">15/11/2025</h2>
+          <i class="fas fa-sun text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
+          <h1 class="text-2xl md:text-3xl font-light mt-auto">23°</h1>
         </div>
+
       </div>
     </section>
+
   </main>
 
-  <!-- Error section -->
-  <div id="error" class="fixed bottom-4 right-4 bg-red-500/80 backdrop-blur-md text-white px-6 py-3 rounded-xl hidden"></div>
+  <!-- Error Message -->
+  <div id="error" class="fixed bottom-4 right-4 bg-red-500/80 backdrop-blur-md text-white px-4 md:px-6 py-2 md:py-3 rounded-xl text-sm md:text-base hidden z-50"></div>
 
   <script src="scripts/main.js"></script>
 </body>

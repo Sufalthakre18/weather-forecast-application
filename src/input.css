@@ -1,17 +1,12 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   overflow-x: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
 }
 
-/* 3D Clouds Background */
+/* 3D Clouds Background Container */
 #bgElements {
   position: fixed;
   top: 0;
@@ -20,151 +15,292 @@ body {
   height: 100%;
   z-index: 0;
   overflow: hidden;
-  transition: all 1s ease;
 }
 
-.cloud-3d {
+/* 3D Fluid Clouds with Motion */
+.cloud {
   position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 100px;
+  opacity: 0.6;
+  animation: cloud-drift 35s linear infinite;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transform: perspective(1000px) rotateX(5deg);
+  filter: blur(2px);
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
-  animation: float 20s infinite ease-in-out;
 }
 
 .cloud-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(135, 206, 250, 0.6), transparent);
+  width: 100px;
+  height: 30px;
   top: 10%;
-  left: -10%;
+  left: -150px;
   animation-delay: 0s;
 }
 
+.cloud-1::before {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 15px;
+}
+
+.cloud-1::after {
+  width: 40px;
+  height: 40px;
+  top: -15px;
+  right: 15px;
+}
+
 .cloud-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(176, 224, 230, 0.5), transparent);
-  top: 40%;
-  right: -15%;
-  animation-delay: 5s;
+  width: 140px;
+  height: 40px;
+  top: 25%;
+  left: -200px;
+  animation-delay: -10s;
+}
+
+.cloud-2::before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+}
+
+.cloud-2::after {
+  width: 60px;
+  height: 60px;
+  top: -20px;
+  right: 25px;
 }
 
 .cloud-3 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(230, 230, 250, 0.4), transparent);
-  bottom: 20%;
-  left: 30%;
-  animation-delay: 10s;
+  width: 120px;
+  height: 35px;
+  top: 50%;
+  left: -180px;
+  animation-delay: -20s;
 }
 
-@keyframes float {
+.cloud-3::before {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: 20px;
+}
 
-  0%,
+.cloud-3::after {
+  width: 50px;
+  height: 50px;
+  top: -18px;
+  right: 20px;
+}
+
+.cloud-4 {
+  width: 80px;
+  height: 25px;
+  top: 70%;
+  left: -120px;
+  animation-delay: -5s;
+}
+
+.cloud-4::before {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 12px;
+}
+
+.cloud-5 {
+  width: 90px;
+  height: 28px;
+  top: 85%;
+  left: -140px;
+  animation-delay: -15s;
+}
+
+.cloud-5::before {
+  width: 45px;
+  height: 45px;
+  top: -22px;
+  left: 15px;
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-200px) translateY(0) rotateY(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
   100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  25% {
-    transform: translate(50px, -30px) scale(1.1);
-  }
-
-  50% {
-    transform: translate(-30px, 40px) scale(0.9);
-  }
-
-  75% {
-    transform: translate(40px, 20px) scale(1.05);
+    transform: translateX(calc(100vw + 200px)) translateY(-20px) rotateY(5deg);
+    opacity: 0;
   }
 }
 
-/* Cards Styling */
-.weather-card {
+/* Rain Drops */
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(173, 216, 230, 0.8), rgba(173, 216, 230, 0.3));
+  animation: rain-fall 1.2s linear infinite;
+  transform: rotate(15deg);
+  opacity: 0;
+}
+
+.drop-1 {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.drop-2 {
+  left: 20%;
+  animation-delay: 0.1s;
+  height: 25px;
+}
+
+.drop-3 {
+  left: 30%;
+  animation-delay: 0.2s;
+}
+
+.drop-4 {
+  left: 40%;
+  animation-delay: 0.3s;
+  height: 18px;
+}
+
+.drop-5 {
+  left: 50%;
+  animation-delay: 0.4s;
+}
+
+.drop-6 {
+  left: 60%;
+  animation-delay: 0.5s;
+  height: 22px;
+}
+
+.drop-7 {
+  left: 70%;
+  animation-delay: 0.6s;
+}
+
+.drop-8 {
+  left: 80%;
+  animation-delay: 0.7s;
+  height: 19px;
+}
+
+.drop-9 {
+  left: 90%;
+  animation-delay: 0.8s;
+}
+
+@keyframes rain-fall {
+  0% {
+    transform: translateY(-100px) rotate(15deg);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+/* Glass Main Container */
+main {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 24px;
-  padding: 20px;
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.3);
 }
 
-.weather-card:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
-
-/* Forecast Card Wavy Style */
-.forecast-card {
+/* Weather Cards */
+.weather-card {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 20px;
+  transition: all 0.3s ease;
+  min-height: 140px;
+}
+
+.weather-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* Forecast Cards */
+.forecast-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 18px;
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .forecast-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  z-index: 10;
 }
-
 
 /* Graph Styles */
 .graph-line {
-  stroke: rgba(255, 255, 255, 0.6);
-  stroke-width: 2;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 2.5;
   fill: none;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+  stroke-linecap: round;
 }
 
-/* Wave Animation for Forecast */
-#forecast {
-  position: relative;
+/* Temperature Display */
+.temp-display {
+  font-size: 7rem;
+  font-weight: 200;
+  line-height: 1;
+  text-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+  letter-spacing: -0.05em;
 }
 
-#forecast::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: wave 3s infinite linear;
-}
-
-@keyframes wave {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@media (max-width: 768px) {
-  .temp-display {
-    font-size: 4rem;
-  }
-
-  .cloud-3d {
-    filter: blur(60px);
-  }
-}
-
-/* Weather condition backgrounds */
+/* Weather Condition Backgrounds */
 body.cloudy {
   background: linear-gradient(135deg, #4B79A1 0%, #283E51 100%);
 }
 
 body.sunny {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
 }
 
 body.rainy {
@@ -172,9 +308,37 @@ body.rainy {
 }
 
 body.stormy {
-  background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
 }
 
 body.snowy {
   background: linear-gradient(135deg, #E0EAFC 0%, #CFDEF3 100%);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .temp-display {
+    font-size: 4.5rem;
+  }
+
+  .cloud {
+    animation-duration: 25s;
+    filter: blur(3px);
+  }
+
+  .forecast-card {
+    min-height: 160px;
+    padding: 14px;
+  }
+
+  .weather-card {
+    min-height: 120px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .temp-display {
+    font-size: 3.5rem;
+  }
 }
