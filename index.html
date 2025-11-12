@@ -22,7 +22,7 @@
     <div class="cloud-3d cloud-3"></div>
   </div>
 
-  <main class="relative z-10 flex flex-col min-h-screen rounded-3xl max-w-7xl mx-auto p-6">
+  <main class="relative z-10 flex flex-col min-h-screen rounded-3xl max-w-7xl mx-auto p-6 bg-[rgba(255,255,255,0.05)] backdrop-blur-[20px] border border-[rgba(255,255,255,0.1)] [box-shadow:0_8px_32px_0_rgba(0,0,0,0.37)]">
     <!-- Header Section -->
     <header class="flex justify-between items-center py-4 px-4 mb-6">
       <h1 class="text-xl md:text-2xl font-light text-white">
@@ -44,7 +44,7 @@
       <div class="w-full max-w-md">
         <form id="searchForm" class="flex gap-3 mb-3">
           <input type="text" id="cityInput" placeholder="Search city..."
-            class="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm border border-white/20" />
+            class="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm border border-white/20 focus:placeholder-[rgba(255,255,255,0.5)]" />
           <button type="submit"
             class="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300 border border-white/30">
             <i class="fas fa-search"></i>
@@ -74,7 +74,7 @@
           A period when cloudy weather is common, and it can occur during a specific time of year, such as the rainy or winter season
         </p>
         
-        <h1 class="temp-display mt-6" id="current-temperature">
+        <h1 class="temp-display text-[6rem] font-extralight leading-none [text-shadow:0_0_40px_rgba(255,255,255,0.3)] mt-6" id="current-temperature">
           27°<span class="text-5xl">C</span>
         </h1>
         <h2 class="text-xl flex items-center gap-2" id="locationDisplay">
@@ -91,7 +91,7 @@
             </span>
             <span class="font-semibold" id="windSpeed">7.89 km/h</span>
           </div>
-          <div class="graph-container">
+          <div class="h-[60px] mt-2.5 relative">
             <svg width="100%" height="60" id="wind-graph">
               <path class="graph-line" d="M 0 40 Q 30 20, 60 35 T 120 40 T 180 30 T 240 35" />
             </svg>
@@ -105,7 +105,7 @@
             </span>
             <span class="font-semibold" id="humidityLevel">30%</span>
           </div>
-          <div class="graph-container">
+          <div class="h-[60px] mt-2.5 relative">
             <svg width="100%" height="60" id="humidity-graph">
               <path class="graph-line" d="M 0 30 Q 30 45, 60 25 T 120 35 T 180 40 T 240 30" />
             </svg>
@@ -122,31 +122,31 @@
         <div class="forecast-card">
           <h3 class="text-sm text-white/60 mb-2">Monday</h3>
           <h2 class="text-xs mb-3">11/11/2025</h2>
-          <i class="fas fa-cloud weather-icon mb-3"></i>
+          <i class="fas fa-cloud text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
           <h1 class="text-3xl font-light">26°</h1>
         </div>
         <div class="forecast-card">
           <h3 class="text-sm text-white/60 mb-2">Tuesday</h3>
           <h2 class="text-xs mb-3">12/11/2025</h2>
-          <i class="fas fa-cloud-sun weather-icon mb-3"></i>
+          <i class="fas fa-cloud-sun text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
           <h1 class="text-3xl font-light">28°</h1>
         </div>
         <div class="forecast-card">
           <h3 class="text-sm text-white/60 mb-2">Wednesday</h3>
           <h2 class="text-xs mb-3">13/11/2025</h2>
-          <i class="fas fa-cloud-rain weather-icon mb-3"></i>
+          <i class="fas fa-cloud-rain text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
           <h1 class="text-3xl font-light">24°</h1>
         </div>
         <div class="forecast-card">
           <h3 class="text-sm text-white/60 mb-2">Thursday</h3>
           <h2 class="text-xs mb-3">14/11/2025</h2>
-          <i class="fas fa-cloud weather-icon mb-3"></i>
+          <i class="fas fa-cloud text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
           <h1 class="text-3xl font-light">26°</h1>
         </div>
         <div class="forecast-card">
           <h3 class="text-sm text-white/60 mb-2">Friday</h3>
           <h2 class="text-xs mb-3">15/11/2025</h2>
-          <i class="fas fa-sun weather-icon mb-3"></i>
+          <i class="fas fa-sun text-[3rem] [text-shadow:0_0_20px_rgba(255,255,255,0.5)] mb-3"></i>
           <h1 class="text-3xl font-light">23°</h1>
         </div>
       </div>
