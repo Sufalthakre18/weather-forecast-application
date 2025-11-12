@@ -10,119 +10,151 @@
   <title>Weather Forecast Application</title>
   <link rel="stylesheet" href="src/output.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
 </head>
 
-<body class="bg-gray-900 text-white p-8 ">
+<body class="text-white p-4 md:p-8 cloudy">
 
-  <div id="bgElements"></div>
-  <main class=" border relative z-10 flex flex-col min-h-screen">
-    <!-- header Section -->
-    <header class="text-center flex justify-between py-2 px-4">
-      <h1 class="text-lg md:text-xl font-light bg-clip-text text-slate-300 mb-2 ">Check the Weather
-        <span>☁️🌧️🌩️</span>
+  <!-- 3D Fluid Clouds Background -->
+  <div id="bgElements">
+    <div class="cloud-3d cloud-1"></div>
+    <div class="cloud-3d cloud-2"></div>
+    <div class="cloud-3d cloud-3"></div>
+  </div>
+
+  <main class="relative z-10 flex flex-col min-h-screen rounded-3xl max-w-7xl mx-auto p-6">
+    <!-- Header Section -->
+    <header class="flex justify-between items-center py-4 px-4 mb-6">
+      <h1 class="text-xl md:text-2xl font-light text-white">
+        Check the Weather <span class="ml-2">☁️🌧️🌩️</span>
       </h1>
-      <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
-        <p class="text-xs md:text-lg">11 NOV | 9.00</p><button
-          class=" py-1 px-3 md:px-4 hidden md:flex justify-between items-center gap-2 md:gap-4 border rounded-full">
-          <div class="w-5 md:w-9 md:h-9 overflow-hidden rounded-full">
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <p class="text-sm md:text-base" id="currentDateTime">11 NOV | 9:00</p>
+        <button class="py-2 px-4 hidden md:flex items-center gap-3 border border-white/30 rounded-full hover:bg-white/10 transition-all">
+          <div class="w-9 h-9 overflow-hidden rounded-full">
             <img src="assets/admin-pic.jpg" alt="admin-pic" class="w-full h-full object-cover" />
           </div>
           <span>Admin</span>
         </button>
       </div>
     </header>
+
     <!-- Search & Controls -->
-    <section class="px-2 md:px-4 flex flex-col items-center">
-      <div class="rounded-2xl p-3 w-full max-w-md">
-        <form id="searchForm" class="flex gap-1 md:gap-3 mb-2">
+    <section class="px-2 md:px-4 flex flex-col items-center mb-8">
+      <div class="w-full max-w-md">
+        <form id="searchForm" class="flex gap-3 mb-3">
           <input type="text" id="cityInput" placeholder="Search city..."
-            class="flex-1 px-2 md:px-4 py-2 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-1 focus:ring-white/30" />
+            class="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm border border-white/20" />
           <button type="submit"
-            class="px-3 md:px-6 py-2 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300">
+            class="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-300 border border-white/30">
             <i class="fas fa-search"></i>
           </button>
         </form>
         <button id="locationBtn"
-          class="w-full py-3 bg-slate-900 hover:bg-slate-300 rounded-xl transition-all duration-300 ">
+          class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20">
           <i class="fas fa-location-arrow mr-2"></i>
           Use My Location
         </button>
       </div>
 
-      <!-- Recent Cities Dropdown -->
-      <select id="recentCities" class=" rounded-xl px-2 md:px-4 py-2 w-full max-w-md mt-4 hidden">
+      <select id="recentCities" class="rounded-xl px-4 py-2 w-full max-w-md mt-4 bg-white/10 backdrop-blur-sm border border-white/20 hidden">
         <option value="">Recent Searches</option>
-        <!-- dynamic options will be added here -->
       </select>
     </section>
-    <!-- display Current Weather -->
-    <section class="grid grid-cols-1 md:grid-cols-2">
-      <!-- left section -->
-      <div id="left" class="flex flex-col w-full">
-        <h1 class="text-3xl">Cloudy
-          <h2 class="text-xl">Partially cloud sky</h2>
-        </h1>
-        <p class="flex-wrap">a period when cloudy weather is common,
-           and it can occur during a specific time of year, such as the rainy or
-          winter season</p>
+
+    <!-- Current Weather Display -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 px-4">
+      <!-- Left Section -->
+      <div id="left" class="flex flex-col space-y-4">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-light mb-2" id="weatherCondition">Cloudy</h1>
+          <h2 class="text-lg md:text-xl text-white/70" id="weatherDescription">Partially cloud sky</h2>
+        </div>
+        <p class="text-sm md:text-base text-white/60 leading-relaxed max-w-lg" id="weatherExplanation">
+          A period when cloudy weather is common, and it can occur during a specific time of year, such as the rainy or winter season
+        </p>
         
-        <h1 id="current-temperature" class="text-8xl text-red-900">27°<span>C</span></h1>
-        <h1><i class="fa-solid fa-location-dot"></i>Lalburra</h1>
+        <h1 class="temp-display mt-6" id="current-temperature">
+          27°<span class="text-5xl">C</span>
+        </h1>
+        <h2 class="text-xl flex items-center gap-2" id="locationDisplay">
+          <i class="fa-solid fa-location-dot"></i>Lalburra
+        </h2>
       </div>
 
-      <!-- right section  -->
-      <div id="right" class="flex flex-col w-full">
-        <div class="cards w-[50%]">
-          <div class="flex justify-between "><span><i class="fa-solid fa-wind"></i> Wind status</span><span>7.89km</span></div>
-          <div id="wind-graph"></div>
+      <!-- Right Section - Weather Stats -->
+      <div id="right" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="weather-card">
+          <div class="flex justify-between items-center mb-2">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-wind"></i> Wind Status
+            </span>
+            <span class="font-semibold" id="windSpeed">7.89 km/h</span>
+          </div>
+          <div class="graph-container">
+            <svg width="100%" height="60" id="wind-graph">
+              <path class="graph-line" d="M 0 40 Q 30 20, 60 35 T 120 40 T 180 30 T 240 35" />
+            </svg>
+          </div>
         </div>
-        <div class="cards w-[50%]">
-          <div class="flex justify-between "><span class="flex"><img src="assets/humidity.png" class="w-5" alt="humidity">humidity status</span><span>30%</span></div>
-          <div id="humidity-graph"></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 5 days forecast section , It will be in wavy style-->
-    <section class="">
-      <div id="forecast" class="grid grid-cols-1 gap- sm:grid-cols-2 md:grid-cols-5">
-        <div class="forecast-card">
-          <h2>11|11|2025</h2>
-          <h1 id="forecast-temp" class="text-3xl">27°</h1>
-          <div>svg</div> <!--according to weather -->
-        </div>
-        <div class="forecast-card">
-          <h2>11|11|2025</h2>
-          <h1 id="forecast-temp" class="text-3xl">27°</h1>
-          <div>svg</div> <!--according to weather -->
-        </div>
-        <div class="forecast-card">
-          <h2>11|11|2025</h2>
-          <h1 id="forecast-temp" class="text-3xl">27°</h1>
-          <div>svg</div> <!--according to weather -->
-        </div>
-        <div class="forecast-card">
-          <h2>11|11|2025</h2>
-          <h1 id="forecast-temp" class="text-3xl">27°</h1>
-          <div>svg</div> <!--according to weather -->
-        </div>
-        <div class="forecast-card">
-          <h2>11|11|2025</h2>
-          <h1 id="forecast-temp" class="text-3xl">27°</h1>
-          <div>svg</div> <!--according to weather -->
+        <div class="weather-card">
+          <div class="flex justify-between items-center mb-2">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-droplet"></i> Humidity
+            </span>
+            <span class="font-semibold" id="humidityLevel">30%</span>
+          </div>
+          <div class="graph-container">
+            <svg width="100%" height="60" id="humidity-graph">
+              <path class="graph-line" d="M 0 30 Q 30 45, 60 25 T 120 35 T 180 40 T 240 30" />
+            </svg>
+          </div>
         </div>
       </div>
     </section>
 
-
-
-
-
-
-
+    <!-- 5 Day Forecast Section -->
+    <section class="px-4">
+      <h2 class="text-2xl font-light mb-6">5-Day Forecast</h2>
+      <div id="forecast" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
+        <!-- forecast card  -->
+        <div class="forecast-card">
+          <h3 class="text-sm text-white/60 mb-2">Monday</h3>
+          <h2 class="text-xs mb-3">11/11/2025</h2>
+          <i class="fas fa-cloud weather-icon mb-3"></i>
+          <h1 class="text-3xl font-light">26°</h1>
+        </div>
+        <div class="forecast-card">
+          <h3 class="text-sm text-white/60 mb-2">Tuesday</h3>
+          <h2 class="text-xs mb-3">12/11/2025</h2>
+          <i class="fas fa-cloud-sun weather-icon mb-3"></i>
+          <h1 class="text-3xl font-light">28°</h1>
+        </div>
+        <div class="forecast-card">
+          <h3 class="text-sm text-white/60 mb-2">Wednesday</h3>
+          <h2 class="text-xs mb-3">13/11/2025</h2>
+          <i class="fas fa-cloud-rain weather-icon mb-3"></i>
+          <h1 class="text-3xl font-light">24°</h1>
+        </div>
+        <div class="forecast-card">
+          <h3 class="text-sm text-white/60 mb-2">Thursday</h3>
+          <h2 class="text-xs mb-3">14/11/2025</h2>
+          <i class="fas fa-cloud weather-icon mb-3"></i>
+          <h1 class="text-3xl font-light">26°</h1>
+        </div>
+        <div class="forecast-card">
+          <h3 class="text-sm text-white/60 mb-2">Friday</h3>
+          <h2 class="text-xs mb-3">15/11/2025</h2>
+          <i class="fas fa-sun weather-icon mb-3"></i>
+          <h1 class="text-3xl font-light">23°</h1>
+        </div>
+      </div>
+    </section>
   </main>
-  <div id="error"></div>
 
+  <!-- Error section -->
+  <div id="error" class="fixed bottom-4 right-4 bg-red-500/80 backdrop-blur-md text-white px-6 py-3 rounded-xl hidden"></div>
 
   <script src="scripts/main.js"></script>
 </body>
