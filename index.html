@@ -56,8 +56,7 @@
       </select>
     </section>
     <!-- display Current Weather -->
-    <section class="flex md:flex-row ">
-
+    <section class="grid grid-cols-1 md:grid-cols-2">
       <!-- left section -->
       <div id="left" class="flex flex-col w-full">
         <h1 class="text-3xl">Cloudy
@@ -80,6 +79,37 @@
         <div class="cards w-[50%]">
           <div class="flex justify-between "><span class="flex"><img src="assets/humidity.png" class="w-5" alt="humidity">humidity status</span><span>30%</span></div>
           <div id="humidity-graph"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 days forecast section , It will be in wavy style-->
+    <section class="">
+      <div id="forecast" class="grid grid-cols-1 gap- sm:grid-cols-2 md:grid-cols-5">
+        <div class="forecast-card">
+          <h2>11|11|2025</h2>
+          <h1 id="forecast-temp" class="text-3xl">27°</h1>
+          <div>svg</div> <!--according to weather -->
+        </div>
+        <div class="forecast-card">
+          <h2>11|11|2025</h2>
+          <h1 id="forecast-temp" class="text-3xl">27°</h1>
+          <div>svg</div> <!--according to weather -->
+        </div>
+        <div class="forecast-card">
+          <h2>11|11|2025</h2>
+          <h1 id="forecast-temp" class="text-3xl">27°</h1>
+          <div>svg</div> <!--according to weather -->
+        </div>
+        <div class="forecast-card">
+          <h2>11|11|2025</h2>
+          <h1 id="forecast-temp" class="text-3xl">27°</h1>
+          <div>svg</div> <!--according to weather -->
+        </div>
+        <div class="forecast-card">
+          <h2>11|11|2025</h2>
+          <h1 id="forecast-temp" class="text-3xl">27°</h1>
+          <div>svg</div> <!--according to weather -->
         </div>
       </div>
     </section>
