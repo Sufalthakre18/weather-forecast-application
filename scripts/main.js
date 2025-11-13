@@ -141,6 +141,7 @@ let weatherDescription = document.querySelector('#weatherDescription')
 let weatherExplanation = document.querySelector('#weatherExplanation')
 let clouds = document.querySelectorAll('.cloud');
 let rainDrops = document.querySelectorAll('.rain-drop');
+const recentCitiesSelect = document.querySelector('#recentCities');
 
 // time updation
 const date = new Date()
@@ -152,13 +153,50 @@ currentDateTime.textContent = `${formattedDate} | ${formattedTime}`;
 // clear value after refresh and submit
 input.value = ''
 
+// Dropdown for Recently Searched Cities
+let recentCities = JSON.parse(localStorage.getItem('recentCities')) || [];
+function updateRecentCities() {
+  if (recentCities.length === 0) {
+    recentCitiesSelect.classList.add('hidden');
+    return;
+  }
+  recentCitiesSelect.classList.remove('hidden');
+  recentCitiesSelect.innerHTML = '<option value="">Recent Searches</option>';
+  recentCities.forEach(city => {
+    const option = document.createElement('option');
+    option.value = city;
+    option.textContent = city;
+    recentCitiesSelect.appendChild(option);
+  });
+}
+recentCitiesSelect.addEventListener('change', (e) => {
+  if (e.target.value) getWeatherByCity(e.target.value);
+});
+updateRecentCities();
+
+//  City value Submit through form for api
+
 form.addEventListener('submit', (e) => {
-  e.preventDefault()
-  if (input.value.trim() == '') return
-  getWeatherByCity(input.value.trim())
-  input.value = ''
+  e.preventDefault();
+  const city = input.value.trim();
+  if (city === '') {
+    showError('Please enter a city name.');
+    return;
+  }
+  if (!/^[a-zA-Z\s\-]+$/.test(city)) {
+    showError('Invalid city name. Use only letters, spaces, or hyphens.');
+    return;
+  }
+  if (city.length < 2) {
+    showError('City name too short.');
+    return;
+  }
+
+  getWeatherByCity(city);
+  input.value = '';
 })
 
+// take location using navigation
 locationBtn.addEventListener('click', () => {
   if (navigator.geolocation) {
     locationBtn.innerHTML = `<i class="fas fa-location-arrow mr-2"></i> Getting Location...`
@@ -177,7 +215,7 @@ locationBtn.addEventListener('click', () => {
 })
 
 
-
+// call api with city 
 async function getWeatherByCity(city) {
   try {
     const geo = await fetch(`${GEOCODING_URL}?name=${city}&count=1&language=en&format=json`)
@@ -185,6 +223,14 @@ async function getWeatherByCity(city) {
     console.log(data);
     if (!data.results?.[0]) showError("City not found")
 
+    // FOR DROPDOWN Cities
+    if (!recentCities.includes(city)) {
+      recentCities.unshift(city);
+      if (recentCities.length > 5) recentCities.pop();  // Limit to 5
+      localStorage.setItem('recentCities', JSON.stringify(recentCities));
+      updateRecentCities();
+    }
+    // call weather api after taking details
     const { latitude, longitude, name, country } = data.results[0];
     return await fetchWeatherData(latitude, longitude, `${name || ''} ${country || ''}`)
 
@@ -193,61 +239,85 @@ async function getWeatherByCity(city) {
   }
 
 }
-
+// call api with location
 async function getWeatherByCords(lat, lon) {
   return await fetchWeatherData(lat, lon, 'Your location...')
 }
 
+// call api and update values
 async function fetchWeatherData(lat, lon, locationName) {
+
   let params = new URLSearchParams({
     latitude: lat,
     longitude: lon,
     current: 'temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode',
-    daily: 'temperature_2m_max,temperature_2m_min,weathercode',
+    daily: 'temperature_2m_max,temperature_2m_min,weathercode,wind_speed_10m_max,relative_humidity_2m_mean',
     temperature_unit: 'celsius',
     timezone: 'auto',
     forecast_days: 5
   })
 
-  const weather = await fetch(`${WEATHER_URL}?${params}`)
-  const data = await weather.json()
-  console.log(data);
+  try {
+    const weather = await fetch(`${WEATHER_URL}?${params}`)
+    if (!weather.ok) {
+      throw new Error(`Weather API error: ${weather.status} ${weather.statusText}`);
+    }
+    const data = await weather.json();
 
-  // Current weather section updation
-  let currentTemp = 0;
-  const interval = setInterval(() => {
-    currentTemp++;
-    currentTemperatur.innerHTML = `${currentTemp}<span class="text-4xl md:text-6xl">${data.current_units.temperature_2m}</span>`;
-    if (currentTemp >= Math.round(data.current.temperature_2m)) clearInterval(interval);
-  }, 50);
-  locationDisplay.textContent = locationName
-  humidityLevel.textContent = `${data.current.relative_humidity_2m}%`
-  windSpeed.textContent = `${data.current.wind_speed_10m}km/h`
-  weatherCondition.textContent = `${weatherMap[data.current.weathercode].h1 || 'unknown'}`
-  weatherDescription.textContent = `${weatherMap[data.current.weathercode].h2 || "No data available"}`
-  weatherExplanation.textContent = `${weatherMap[data.current.weathercode].p || ""}`
+    // Current weather section updation in UI
+    let currentTemp = 0;
+    const interval = setInterval(() => {
+      currentTemp++;
+      currentTemperatur.innerHTML = `${currentTemp}<span class="text-4xl md:text-6xl">${data.current_units.temperature_2m}</span>`;
+      if (currentTemp >= Math.round(data.current.temperature_2m)) clearInterval(interval);
+    }, 50);
+    locationDisplay.textContent = locationName
+    humidityLevel.textContent = `${data.current.relative_humidity_2m}%`
+    windSpeed.textContent = `${data.current.wind_speed_10m}km/h`
+    weatherCondition.textContent = `${weatherMap[data.current.weathercode].h1 || 'unknown'}`
+    weatherDescription.textContent = `${weatherMap[data.current.weathercode].h2 || "No data available"}`
+    weatherExplanation.textContent = `${weatherMap[data.current.weathercode].p || ""}`
+    rawTemp = data.current.temperature_2m;
 
-  // 5 days forecast updation
-  forecastCard.forEach((cards, index) => {
-    if (index < 5) {
-      const minTemp = Math.round(data.daily.temperature_2m_min[index]);
-      const minTempUnit = data.daily_units.temperature_2m_min
-      const maxTemp = Math.round(data.daily.temperature_2m_max[index]);
-      const maxTempUnit = data.daily_units.temperature_2m_max
-      const date = new Date(data.daily.time[index]);
-      const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
 
-      // weather code for cloude icons 
-      const weathericon = getCloudIcon(data.daily.weathercode[index])
-      cards.innerHTML = `<h3 class="text-xs md:text-sm text-white/60 mb-1">${dayName}</h3>
+    // 5 days forecast updation
+    forecastCard.forEach((cards, index) => {
+      if (index < 5) {
+        const minTemp = Math.round(data.daily.temperature_2m_min[index]);
+        const minTempUnit = data.daily_units.temperature_2m_min
+        const maxTemp = Math.round(data.daily.temperature_2m_max[index]);
+        const maxTempUnit = data.daily_units.temperature_2m_max
+        const wind = data.daily.wind_speed_10m_max[index];
+        const humidity = data.daily.relative_humidity_2m_mean[index];
+        const date = new Date(data.daily.time[index]);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+        // weather code for cloude icons 
+        const weathericon = getCloudIcon(data.daily.weathercode[index])
+        cards.innerHTML = `<h3 class="text-xs md:text-sm text-white/60 mb-1">${dayName}</h3>
           <h2 class="text-xs mb-2 md:mb-3 text-white/50">${data.daily.time[index]}</h2>
           <i class="fas fa-${weathericon} text-3xl md:text-4xl lg:text-5xl my-2 md:my-3" style="text-shadow: 0 0 20px rgba(255,255,255,0.5)"></i>
-          <h1 class="text-2xl md:text-3xl font-light mt-auto">${minTemp}${minTempUnit}-${maxTemp}${maxTempUnit}</h1>`
-    }
-  })
+          <div class="flex justify-around text-sm mt-2">
+              <span><i class="fas fa-thermometer-half mr-1"></i>${minTemp}${minTempUnit}- ${maxTemp}${maxTempUnit}</span>
+              <span><i class="fas fa-wind mr-1"></i>${wind}km/h</span>
+              <span><i class="fas fa-droplet mr-1"></i>${humidity}%</span>
+          </div>`
+      }
+    })
 
-  changeWeatherBackground(data.current.weathercode);
-  updateGraphs(data.current.wind_speed_10m, data.current.relative_humidity_2m);
+    changeWeatherBackground(data.current.weathercode);
+    updateGraphs(data.current.wind_speed_10m, data.current.relative_humidity_2m);
+
+    // Extreme temp alerts
+    if (Math.round(data.current.temperature_2m) > 40) showError('Extreme Heat Alert: Temperature above 40°C! Stay hydrated and avoid direct sun.');
+    if (Math.round(data.current.temperature_2m) < 5) showError('Extreme Cold Alert: Temperature below 5°C! Dress warmly and limit outdoor exposure.');
+
+
+  } catch (error) {
+    console.error('Weather fetch failed:', error);
+    showError('Failed to load weather. Check internet or try again later.');
+  }
+
 }
 
 // get cloud icon using weather code in api
@@ -298,27 +368,40 @@ function changeWeatherBackground(weatherCode) {
 }
 // right section graph for wind and humidity
 function updateGraphs(wind, humidity) {
-    const windPath = document.querySelector('#wind-graph .graph-line');
-    const humidityPath = document.querySelector('#humidity-graph .graph-line');
-    
-    // Simple wave pattern based on values
-    const windScale = Math.min((wind / 50) * 100, 100);
-    const humidityScale = humidity;
-    
-    // Create dynamic wave paths
-    windPath.setAttribute('d', `M 0 40 Q 30 ${40 - windScale/3}, 60 ${40 - windScale/2} T 120 ${40 - windScale/3} T 180 ${40 - windScale/4} T 240 35`);
-    humidityPath.setAttribute('d', `M 0 30 Q 30 ${30 + humidityScale/2}, 60 ${30 - humidityScale/3} T 120 ${30 + humidityScale/4} T 180 ${30 + humidityScale/3} T 240 30`);
+  const windPath = document.querySelector('#wind-graph .graph-line');
+  const humidityPath = document.querySelector('#humidity-graph .graph-line');
+
+  // Simple wave pattern based on values
+  const windScale = Math.min((wind / 50) * 100, 100);
+  const humidityScale = humidity;
+
+  // Create dynamic wave paths
+  windPath.setAttribute('d', `M 0 40 Q 30 ${40 - windScale / 3}, 60 ${40 - windScale / 2} T 120 ${40 - windScale / 3} T 180 ${40 - windScale / 4} T 240 35`);
+  humidityPath.setAttribute('d', `M 0 30 Q 30 ${30 + humidityScale / 2}, 60 ${30 - humidityScale / 3} T 120 ${30 + humidityScale / 4} T 180 ${30 + humidityScale / 3} T 240 30`);
 }
 
+// toggle button for c/f
+let rawTemp = 0, unit = '°C';
+document.getElementById('toggleUnit').onclick = () => {
+  unit = unit === '°C' ? '°F' : '°C';
+  const t = unit === '°C' ? Math.round(rawTemp) : Math.round(rawTemp * 9/5 + 32);
+  currentTemperatur.innerHTML = `${t}<span class="text-4xl md:text-6xl">${unit}</span>`;
+  this.textContent = unit;
+};
 
+
+// show error perfectly
 function showError(error) {
   let errorEl = document.querySelector('#error')
   errorEl.textContent = error
-  errorEl.classList.remove = 'hidden'
+  errorEl.classList.remove('hidden')
   setTimeout(() => {
     errorEl.classList.add('hidden')
   }, 4000);
 }
+
+
+
 
 // by default weather
 
