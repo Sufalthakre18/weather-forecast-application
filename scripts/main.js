@@ -186,7 +186,7 @@ async function getWeatherByCity(city) {
     if (!data.results?.[0]) showError("City not found")
 
     const { latitude, longitude, name, country } = data.results[0];
-    return await fetchWeatherData(latitude, longitude, `${name} ${country}`)
+    return await fetchWeatherData(latitude, longitude, `${name || ''} ${country || ''}`)
 
   } catch (error) {
     console.log("error :", error);
@@ -247,6 +247,7 @@ async function fetchWeatherData(lat, lon, locationName) {
   })
 
   changeWeatherBackground(data.current.weathercode);
+  updateGraphs(data.current.wind_speed_10m, data.current.relative_humidity_2m);
 }
 
 // get cloud icon using weather code in api
@@ -268,7 +269,7 @@ function changeWeatherBackground(weatherCode) {
   let weatherClass = 'cloudy';
   let cloudColor = 'rgba(255, 255, 255, 0.7)';
   let showRain = false;
-  
+
   if (code === 0) {
     weatherClass = 'sunny';
     cloudColor = 'rgba(255, 255, 255, 0.4)';
@@ -290,10 +291,23 @@ function changeWeatherBackground(weatherCode) {
     cloudColor = 'rgba(180, 190, 200, 0.5)';
     showRain = true;
   }
-  
+
   document.body.classList.add(weatherClass);
   clouds.forEach(cloud => cloud.style.background = cloudColor);
   rainDrops.forEach(drop => drop.style.opacity = showRain ? '0.9' : '0');
+}
+// right section graph for wind and humidity
+function updateGraphs(wind, humidity) {
+    const windPath = document.querySelector('#wind-graph .graph-line');
+    const humidityPath = document.querySelector('#humidity-graph .graph-line');
+    
+    // Simple wave pattern based on values
+    const windScale = Math.min((wind / 50) * 100, 100);
+    const humidityScale = humidity;
+    
+    // Create dynamic wave paths
+    windPath.setAttribute('d', `M 0 40 Q 30 ${40 - windScale/3}, 60 ${40 - windScale/2} T 120 ${40 - windScale/3} T 180 ${40 - windScale/4} T 240 35`);
+    humidityPath.setAttribute('d', `M 0 30 Q 30 ${30 + humidityScale/2}, 60 ${30 - humidityScale/3} T 120 ${30 + humidityScale/4} T 180 ${30 + humidityScale/3} T 240 30`);
 }
 
 
@@ -307,6 +321,5 @@ function showError(error) {
 }
 
 // by default weather
-
 
 getWeatherByCity('Delhi');
