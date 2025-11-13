@@ -5,7 +5,7 @@ Shows current weather, a 5-day forecast, location search & geolocation, recent s
 
 ---
 
-#### live Project : [live Project]()
+#### live Project : [live Project](https://weather-forecast-application-lyart.vercel.app/)
 #### Source code : [Github link](https://github.com/Sufalthakre18/weather-forecast-application)
 
 ## ⚙️ Technologies Used

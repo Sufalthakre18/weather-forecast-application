@@ -201,7 +201,6 @@ locationBtn.addEventListener('click', () => {
   if (navigator.geolocation) {
     locationBtn.innerHTML = `<i class="fas fa-location-arrow mr-2"></i> Getting Location...`
     navigator.geolocation.getCurrentPosition(async (position) => {
-      console.log(`your city lat :${position.coords.latitude} long:${position.coords.longitude}`);
       await getWeatherByCords(position.coords.latitude, position.coords.longitude)
     },
       (error) => {
@@ -220,7 +219,6 @@ async function getWeatherByCity(city) {
   try {
     const geo = await fetch(`${GEOCODING_URL}?name=${city}&count=1&language=en&format=json`)
     const data = await geo.json()
-    console.log(data);
     if (!data.results?.[0]) showError("City not found")
 
     // FOR DROPDOWN Cities
